@@ -4,35 +4,90 @@ import Link from '@mui/material/Link';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
-import { Link as RouterLink } from 'react-router-dom';
-import { routes } from '../../constants';
+import { useForm, Controller } from 'react-hook-form';
+
+import { LoginDTO } from '@/types/auth';
+import useAuthStore from '@/store/useAuthStore';
+import { getServerError } from '@/utils/errorUtils';
 
 const LoginPage = () => {
+  const { handleSubmit, control } = useForm<LoginDTO>({
+    defaultValues: { email: '', password: '' },
+  });
+
+  const login = useAuthStore((state) => state.login);
+
+  const onSubmit = async (values: LoginDTO) => {
+    try {
+      await login(values);
+      console.log('success'); // TODO: redirect to dashboard page
+    } catch (error) {
+      const serverError = getServerError(error);
+      console.log('serverError', serverError); // TODO: show error message
+    }
+  };
+
   return (
     <div>
       <Typography component="h1" variant="h5">
         Sign in
       </Typography>
-      <Box component="form" noValidate sx={{ mt: 1 }}>
-        <TextField
-          margin="normal"
-          required
-          fullWidth
-          id="email"
-          label="Email Address"
+      <Box
+        component="form"
+        noValidate
+        sx={{ mt: 1 }}
+        onSubmit={handleSubmit(onSubmit)}
+      >
+        <Controller
           name="email"
-          autoComplete="email"
-          autoFocus
+          control={control}
+          rules={{
+            required: 'Email is required field',
+            pattern: {
+              value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+              message: 'invalid email address',
+            },
+          }}
+          render={({ field: { onChange, value }, fieldState: { error } }) => (
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              id="email"
+              label="Email Address"
+              name="email"
+              autoComplete="email"
+              onChange={onChange}
+              error={Boolean(error)}
+              helperText={error?.message}
+              value={value}
+              autoFocus
+            />
+          )}
         />
-        <TextField
-          margin="normal"
-          required
-          fullWidth
+
+        <Controller
           name="password"
-          label="Password"
-          type="password"
-          id="password"
-          autoComplete="current-password"
+          control={control}
+          rules={{
+            required: 'Password is required field',
+          }}
+          render={({ field: { onChange, value }, fieldState: { error } }) => (
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              name="password"
+              label="Password"
+              type="password"
+              id="password"
+              autoComplete="current-password"
+              error={Boolean(error)}
+              helperText={error?.message}
+              value={value}
+              onChange={onChange}
+            />
+          )}
         />
         <Button
           type="submit"
@@ -46,11 +101,6 @@ const LoginPage = () => {
           <Grid item xs>
             <Link href="#" variant="body2">
               Forgot password?
-            </Link>
-          </Grid>
-          <Grid item>
-            <Link component={RouterLink} to={routes.signUp} variant="body2">
-              {"Don't have an account? Sign up"}
             </Link>
           </Grid>
         </Grid>
