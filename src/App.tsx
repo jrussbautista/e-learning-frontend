@@ -1,10 +1,10 @@
 import { useEffect } from 'react';
 import useAuthStore from './store/useAuthStore';
 import authUtils, { removeAuth } from './utils/authUtils';
-import AppRouting from './router';
+import AppRouting from './AppRouting';
 
 function App() {
-  const { getCurrentUser, logOut } = useAuthStore((state) => state);
+  const { getCurrentUser, logOut, isLoading } = useAuthStore((state) => state);
 
   useEffect(() => {
     const fetchCurrentUser = async () => {
@@ -21,6 +21,10 @@ function App() {
       logOut();
     }
   }, []);
+
+  if (isLoading) {
+    return null; // TODO: add app skeleton
+  }
 
   return <AppRouting />;
 }

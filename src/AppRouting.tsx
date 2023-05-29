@@ -3,19 +3,15 @@ import {
   RouterProvider,
   createBrowserRouter,
 } from 'react-router-dom';
-import { routes } from './constants';
-import PublicLayout from './layouts/PublicLayout';
-import PrivateLayout from './layouts/ProtectedLayout';
-import LoginPage from './pages/Auth/LoginPage';
-import DashboardPage from './pages/Dashboard/DashboardPage';
-import useAuthStore from './store/useAuthStore';
+import { routes } from '@/constants';
+import PublicLayout from '@/layouts/PublicLayout';
+import PrivateLayout from '@/layouts/ProtectedLayout';
+import LoginPage from '@/pages/Auth/LoginPage';
+import DashboardPage from '@/pages/Dashboard/DashboardPage';
+import useAuthStore from '@/store/useAuthStore';
 
 const AppRouting = () => {
-  const { isLoading, currentUser } = useAuthStore((state) => state);
-
-  if (isLoading) {
-    return null; // TODO: add spinner
-  }
+  const currentUser = useAuthStore((state) => state.currentUser);
 
   const router = createBrowserRouter([
     {
