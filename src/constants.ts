@@ -1,6 +1,7 @@
 export const routes = {
   index: '/',
   login: '/login',
+  dashboard: '/dashboard',
 };
 
 export const localStorageKeys = {

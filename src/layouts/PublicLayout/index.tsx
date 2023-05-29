@@ -1,11 +1,19 @@
-import { Outlet } from 'react-router-dom';
+import { Navigate, Outlet } from 'react-router-dom';
 import Avatar from '@mui/material/Avatar';
 import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import useAuthStore from '@/store/useAuthStore';
+import { routes } from '@/constants';
 
 const PublicLayout = () => {
+  const currentUser = useAuthStore((state) => state.currentUser);
+
+  if (currentUser) {
+    return <Navigate to={routes.dashboard} replace />;
+  }
+
   return (
     <main>
       <Grid container component="main" sx={{ height: '100vh' }}>
