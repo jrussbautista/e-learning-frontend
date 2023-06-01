@@ -4,7 +4,9 @@ import authUtils, { removeAuth } from './utils/authUtils';
 import AppRouting from './AppRouting';
 
 function App() {
-  const { getCurrentUser, logOut, isLoading } = useAuthStore((state) => state);
+  const { getCurrentUser, isLoading, setIsLoading } = useAuthStore(
+    (state) => state
+  );
 
   useEffect(() => {
     const fetchCurrentUser = async () => {
@@ -18,7 +20,7 @@ function App() {
     if (accessToken) {
       fetchCurrentUser();
     } else {
-      logOut();
+      setIsLoading(false);
     }
   }, []);
 

@@ -4,7 +4,7 @@ import { AxiosError } from 'axios';
 export const getServerError = (error: unknown) => {
   const knownError = error as AxiosError<ValidationErrors>;
   if (!knownError.response) {
-    return knownError;
+    return knownError?.message;
   }
   const errorData = knownError.response.data;
   if (errorData?.non_field_errors) {

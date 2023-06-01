@@ -15,6 +15,10 @@ const login = async ({
   return data;
 };
 
+const logout = (): Promise<void> => {
+  return apiClient.post('/auth/token/logout/');
+};
+
 const getMe = async (): Promise<User> => {
   const { data } = await apiClient.get('/auth/users/me/');
   return data;
@@ -23,6 +27,7 @@ const getMe = async (): Promise<User> => {
 const authService = {
   login,
   getMe,
+  logout,
 };
 
 export default authService;

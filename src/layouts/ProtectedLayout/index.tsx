@@ -10,6 +10,7 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import { DRAWER_WIDTH } from './constants';
 import Drawer from './Drawer';
+import AccountMenu from './AccountMenu';
 
 const ProtectedLayout = () => {
   const [mobileOpen, setMobileOpen] = React.useState(false);
@@ -33,18 +34,23 @@ const ProtectedLayout = () => {
         }}
       >
         <Toolbar>
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            edge="start"
-            onClick={handleDrawerToggle}
-            sx={{ mr: 2, display: { sm: 'none' } }}
-          >
-            <MenuIcon />
-          </IconButton>
-          <Typography variant="h6" noWrap component="div">
-            {APP_TITLE}
-          </Typography>
+          <Box sx={{ display: 'flex', width: '100%' }}>
+            <Box sx={{ flex: 1 }}>
+              <IconButton
+                color="inherit"
+                aria-label="open drawer"
+                edge="start"
+                onClick={handleDrawerToggle}
+                sx={{ mr: 2, display: { sm: 'none' } }}
+              >
+                <MenuIcon />
+              </IconButton>
+              <Typography variant="h6" noWrap component="div">
+                {APP_TITLE}
+              </Typography>
+            </Box>
+            <AccountMenu />
+          </Box>
         </Toolbar>
         <Drawer
           mobileOpen={mobileOpen}
