@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 
-import authService from '@/services/authService';
+import * as authService from '@/services/authService';
 import { LoginDTO, User } from '@/types/auth';
 import { removeAuth, setAuth } from '@/utils/authUtils';
 

@@ -34,8 +34,8 @@ const ProtectedLayout = () => {
         }}
       >
         <Toolbar>
-          <Box sx={{ display: 'flex', width: '100%' }}>
-            <Box sx={{ flex: 1 }}>
+          <Box sx={{ display: 'flex', alignItems: 'center', width: '100%' }}>
+            <Box sx={{ flex: 1, display: 'flex', alignItems: 'center' }}>
               <IconButton
                 color="inherit"
                 aria-label="open drawer"
@@ -52,12 +52,8 @@ const ProtectedLayout = () => {
             <AccountMenu />
           </Box>
         </Toolbar>
-        <Drawer
-          mobileOpen={mobileOpen}
-          handleDrawerToggle={handleDrawerToggle}
-        />
       </AppBar>
-
+      <Drawer mobileOpen={mobileOpen} handleDrawerToggle={handleDrawerToggle} />
       <Box
         component="main"
         sx={{

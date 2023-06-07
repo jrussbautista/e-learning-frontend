@@ -2,6 +2,7 @@ export const routes = {
   index: '/',
   login: '/login',
   dashboard: '/dashboard',
+  subjects: '/subjects',
 };
 
 export const localStorageKeys = {
@@ -9,3 +10,7 @@ export const localStorageKeys = {
 };
 
 export const APP_TITLE = 'ELearning Portal';
+
+export const queryKeys = {
+  SUBJECTS: 'subjects',
+};

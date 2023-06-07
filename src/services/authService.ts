@@ -1,7 +1,7 @@
 import { User } from '@/types/auth';
 import { apiClient } from '@/lib/axios';
 
-const login = async ({
+export const login = async ({
   email,
   password,
 }: {
@@ -15,19 +15,11 @@ const login = async ({
   return data;
 };
 
-const logout = (): Promise<void> => {
+export const logout = (): Promise<void> => {
   return apiClient.post('/auth/token/logout/');
 };
 
-const getMe = async (): Promise<User> => {
+export const getMe = async (): Promise<User> => {
   const { data } = await apiClient.get('/auth/users/me/');
   return data;
 };
-
-const authService = {
-  login,
-  getMe,
-  logout,
-};
-
-export default authService;

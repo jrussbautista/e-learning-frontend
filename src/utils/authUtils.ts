@@ -23,7 +23,7 @@ export const setAuth = (token: string) => {
 
 export const removeAuth = () => {
   removeAccessTokenLocalStorage();
-  apiClient.defaults.headers.common.Authorization = `Token `;
+  apiClient.defaults.headers.common.Authorization = ``;
 };
 
 const authUtils = {
