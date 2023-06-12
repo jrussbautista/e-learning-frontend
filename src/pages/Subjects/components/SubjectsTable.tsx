@@ -7,6 +7,7 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 
 import { Subject } from '@/types/subject';
+import SubjectsActions from './SubjectsActions';
 
 type SubjectsTableProps = {
   subjects: Subject[];
@@ -21,6 +22,7 @@ const SubjectsTable = ({ subjects }: SubjectsTableProps) => {
             <TableCell>Title</TableCell>
             <TableCell align="right">Description</TableCell>
             <TableCell align="right">Status</TableCell>
+            <TableCell align="right">Actions</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -35,6 +37,9 @@ const SubjectsTable = ({ subjects }: SubjectsTableProps) => {
               <TableCell align="right">{subject.description}</TableCell>
               <TableCell align="right">
                 {subject.is_published ? 'Published' : 'Draft'}
+              </TableCell>
+              <TableCell align="right">
+                <SubjectsActions isPublished={subject.is_published} />
               </TableCell>
             </TableRow>
           ))}
