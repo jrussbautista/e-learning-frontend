@@ -39,7 +39,7 @@ const SubjectsTable = ({ subjects }: SubjectsTableProps) => {
                 {subject.is_published ? 'Published' : 'Draft'}
               </TableCell>
               <TableCell align="right">
-                <SubjectsActions isPublished={subject.is_published} />
+                <SubjectsActions subject={subject} />
               </TableCell>
             </TableRow>
           ))}

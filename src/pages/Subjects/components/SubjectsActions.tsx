@@ -1,21 +1,49 @@
-import * as React from 'react';
+import React, { useState } from 'react';
 import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
+import { deleteSubject } from '@/services/subjectService';
+import { Subject } from '@/types/subject';
+import { useSnackbar } from 'notistack';
+import { queryClient } from '@/lib/reactQuery';
+import { queryKeys } from '@/constants';
 
 type SubjectsActionsProps = {
-  isPublished: boolean;
+  subject: Subject;
 };
 
-const SubjectsActions = ({ isPublished }: SubjectsActionsProps) => {
-  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+const SubjectsActions = ({ subject }: SubjectsActionsProps) => {
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const [deleting, setDeleting] = useState(false);
+  const { enqueueSnackbar } = useSnackbar();
+
   const open = Boolean(anchorEl);
+
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
   };
   const handleClose = () => {
     setAnchorEl(null);
+  };
+
+  const handleDelete = async () => {
+    try {
+      setDeleting(true);
+      // TODO: add delete subject here
+      await deleteSubject(subject.id);
+      queryClient.invalidateQueries([queryKeys.SUBJECTS]);
+      handleClose();
+      enqueueSnackbar('Successfully subject deleted!', {
+        variant: 'success',
+        anchorOrigin: {
+          vertical: 'top',
+          horizontal: 'right',
+        },
+      });
+    } catch (error) {
+      console.log('error', error);
+    }
   };
 
   return (
@@ -38,13 +66,15 @@ const SubjectsActions = ({ isPublished }: SubjectsActionsProps) => {
           'aria-labelledby': 'subjects-action-button',
         }}
       >
-        {isPublished ? (
+        {subject.isPublished ? (
           <MenuItem onClick={handleClose}>Unpublished</MenuItem>
         ) : (
           <MenuItem onClick={handleClose}>Publish</MenuItem>
         )}
         <MenuItem onClick={handleClose}>Edit</MenuItem>
-        <MenuItem onClick={handleClose}>Delete</MenuItem>
+        <MenuItem onClick={handleDelete} disabled={deleting}>
+          Delete
+        </MenuItem>
       </Menu>
     </div>
   );

@@ -1,5 +1,6 @@
 import { useSubjects } from '@/services/subjectService';
 import SubjectsTable from './components/SubjectsTable';
+import Typography from '@mui/material/Typography';
 
 const SubjectsPage = () => {
   const { data, isError, isLoading } = useSubjects();
@@ -14,7 +15,13 @@ const SubjectsPage = () => {
 
   return (
     <>
-      <SubjectsTable subjects={data.results} />
+      {data.results.length > 0 ? (
+        <SubjectsTable subjects={data.results} />
+      ) : (
+        <Typography sx={{ textAlign: 'center', margin: '20px 0' }}>
+          No subjects yet.
+        </Typography>
+      )}
     </>
   );
 };

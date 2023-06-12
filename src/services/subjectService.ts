@@ -7,6 +7,10 @@ type Response = {
   results: Subject[];
 };
 
+export const deleteSubject = (id: number) => {
+  return apiClient.delete(`/subjects/${id}`);
+};
+
 export const getSubjects = async (): Promise<Response> => {
   const response = await apiClient.get('/subjects/');
   return response.data;
