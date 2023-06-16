@@ -43,7 +43,7 @@ const SubjectsCreatePage = () => {
   };
 
   return (
-    <div>
+    <Box sx={{ maxWidth: 800, margin: '0 auto' }}>
       <Typography component="h1" variant="h5">
         Create Your Subject
       </Typography>
@@ -99,17 +99,43 @@ const SubjectsCreatePage = () => {
             />
           )}
         />
-        <Button
-          type="submit"
-          fullWidth
-          variant="contained"
-          sx={{ mt: 3, mb: 2 }}
-          disabled={isLoading}
-        >
-          Save
-        </Button>
+        <Controller
+          name="description"
+          control={control}
+          rules={{
+            required: 'Description is required field',
+          }}
+          render={({ field: { onChange, value }, fieldState: { error } }) => (
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              name="description"
+              label="Description"
+              type="text"
+              id="description"
+              error={Boolean(error)}
+              helperText={error?.message}
+              value={value}
+              onChange={onChange}
+              multiline
+              rows={5}
+            />
+          )}
+        />
+        <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            sx={{ mt: 3, mb: 2, width: 100 }}
+            disabled={isLoading}
+          >
+            Save
+          </Button>
+        </Box>
       </Box>
-    </div>
+    </Box>
   );
 };
 
