@@ -3,6 +3,7 @@ export const routes = {
   login: '/login',
   dashboard: '/dashboard',
   subjects: '/subjects',
+  subjectsCreate: '/subjects/create',
 };
 
 export const localStorageKeys = {

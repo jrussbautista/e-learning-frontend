@@ -1,10 +1,17 @@
 import { queryKeys } from '@/constants';
 import { apiClient } from '@/lib/axios';
-import { Subject } from '@/types/subject';
-import { useQuery } from '@tanstack/react-query';
+import { Subject, SubjectCreate } from '@/types/subject';
+import { useMutation, useQuery } from '@tanstack/react-query';
 
 type Response = {
   results: Subject[];
+};
+
+export const createSubject = async (
+  values: SubjectCreate
+): Promise<Subject> => {
+  const response = await apiClient.post('/subjects/', values);
+  return response.data;
 };
 
 export const deleteSubject = (id: number) => {
@@ -18,4 +25,10 @@ export const getSubjects = async (): Promise<Response> => {
 
 export const useSubjects = () => {
   return useQuery({ queryKey: [queryKeys.SUBJECTS], queryFn: getSubjects });
+};
+
+export const useSubjectCreate = () => {
+  return useMutation({
+    mutationFn: (values: SubjectCreate) => createSubject(values),
+  });
 };

@@ -9,6 +9,7 @@ import PrivateLayout from '@/layouts/ProtectedLayout';
 import LoginPage from '@/pages/Auth/LoginPage';
 import DashboardPage from '@/pages/Dashboard/DashboardPage';
 import SubjectsPage from '@/pages/Subjects/SubjectsPage';
+import SubjectsCreatePage from '@/pages/Subjects/SubjectsCreatePage';
 import useAuthStore from '@/store/useAuthStore';
 
 const AppRouting = () => {
@@ -38,6 +39,10 @@ const AppRouting = () => {
         {
           path: routes.subjects,
           element: <SubjectsPage />,
+        },
+        {
+          path: routes.subjectsCreate,
+          element: <SubjectsCreatePage />,
         },
       ],
     },

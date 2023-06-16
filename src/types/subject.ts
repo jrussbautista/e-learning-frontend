@@ -1,3 +1,8 @@
+export type SubjectCreate = {
+  title: string;
+  description: string;
+};
+
 export type Subject = {
   id: number;
   title: string;
