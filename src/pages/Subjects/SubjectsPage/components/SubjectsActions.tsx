@@ -7,7 +7,8 @@ import { deleteSubject } from '@/services/subjectService';
 import { Subject } from '@/types/subject';
 import { useSnackbar } from 'notistack';
 import { queryClient } from '@/lib/reactQuery';
-import { queryKeys } from '@/constants';
+import { queryKeys, routes } from '@/constants';
+import { useNavigate } from 'react-router-dom';
 
 type SubjectsActionsProps = {
   subject: Subject;
@@ -17,13 +18,15 @@ const SubjectsActions = ({ subject }: SubjectsActionsProps) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [deleting, setDeleting] = useState(false);
   const { enqueueSnackbar } = useSnackbar();
+  const navigate = useNavigate();
 
   const open = Boolean(anchorEl);
 
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const handleClickMenu = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
   };
-  const handleClose = () => {
+
+  const handleCloseMenu = () => {
     setAnchorEl(null);
   };
 
@@ -33,7 +36,7 @@ const SubjectsActions = ({ subject }: SubjectsActionsProps) => {
       // TODO: add delete subject here
       await deleteSubject(subject.id);
       queryClient.invalidateQueries([queryKeys.SUBJECTS]);
-      handleClose();
+      handleCloseMenu();
       enqueueSnackbar('Successfully subject deleted!', {
         variant: 'success',
         anchorOrigin: {
@@ -46,6 +49,11 @@ const SubjectsActions = ({ subject }: SubjectsActionsProps) => {
     }
   };
 
+  const handleClickEdit = () => {
+    navigate(`${routes.subjectsEdit}`.replace(':id', String(subject.id)));
+    handleCloseMenu();
+  };
+
   return (
     <div>
       <Button
@@ -53,7 +61,7 @@ const SubjectsActions = ({ subject }: SubjectsActionsProps) => {
         aria-controls={open ? 'subjects-actions-menu' : undefined}
         aria-haspopup="true"
         aria-expanded={open ? 'true' : undefined}
-        onClick={handleClick}
+        onClick={handleClickMenu}
       >
         <MoreHorizIcon />
       </Button>
@@ -61,17 +69,17 @@ const SubjectsActions = ({ subject }: SubjectsActionsProps) => {
         id="subjects-actions-menu"
         anchorEl={anchorEl}
         open={open}
-        onClose={handleClose}
+        onClose={handleCloseMenu}
         MenuListProps={{
           'aria-labelledby': 'subjects-action-button',
         }}
       >
-        {subject.isPublished ? (
-          <MenuItem onClick={handleClose}>Unpublished</MenuItem>
+        {subject.is_published ? (
+          <MenuItem onClick={handleCloseMenu}>Unpublished</MenuItem>
         ) : (
-          <MenuItem onClick={handleClose}>Publish</MenuItem>
+          <MenuItem onClick={handleCloseMenu}>Publish</MenuItem>
         )}
-        <MenuItem onClick={handleClose}>Edit</MenuItem>
+        <MenuItem onClick={handleClickEdit}>Edit</MenuItem>
         <MenuItem onClick={handleDelete} disabled={deleting}>
           Delete
         </MenuItem>

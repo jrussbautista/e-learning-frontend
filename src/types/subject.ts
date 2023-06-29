@@ -1,4 +1,4 @@
-export type SubjectCreate = {
+export type SubjectPayload = {
   title: string;
   description: string;
 };

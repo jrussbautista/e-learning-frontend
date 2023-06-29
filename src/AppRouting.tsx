@@ -6,11 +6,12 @@ import {
 import { routes } from '@/constants';
 import PublicLayout from '@/layouts/PublicLayout';
 import PrivateLayout from '@/layouts/ProtectedLayout';
+import useAuthStore from '@/store/useAuthStore';
 import LoginPage from '@/pages/Auth/LoginPage';
 import DashboardPage from '@/pages/Dashboard/DashboardPage';
 import SubjectsPage from '@/pages/Subjects/SubjectsPage';
 import SubjectsCreatePage from '@/pages/Subjects/SubjectsCreatePage';
-import useAuthStore from '@/store/useAuthStore';
+import SubjectsEditPage from '@/pages/Subjects/SubjectsEditPage';
 
 const AppRouting = () => {
   const currentUser = useAuthStore((state) => state.currentUser);
@@ -43,6 +44,10 @@ const AppRouting = () => {
         {
           path: routes.subjectsCreate,
           element: <SubjectsCreatePage />,
+        },
+        {
+          path: routes.subjectsEdit,
+          element: <SubjectsEditPage />,
         },
       ],
     },

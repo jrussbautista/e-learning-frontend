@@ -4,6 +4,7 @@ export const routes = {
   dashboard: '/dashboard',
   subjects: '/subjects',
   subjectsCreate: '/subjects/create',
+  subjectsEdit: '/subjects/:id/edit',
 };
 
 export const localStorageKeys = {
@@ -14,4 +15,5 @@ export const APP_TITLE = 'ELearning Portal';
 
 export const queryKeys = {
   SUBJECTS: 'subjects',
+  SUBJECT: 'subject',
 };
